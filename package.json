@@ -4,8 +4,9 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --open",
     "build": "webpack",
+    "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,7 +18,8 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "path": "^0.12.7",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
     "babel-preset-react": "^6.24.1",
