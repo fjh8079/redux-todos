@@ -1,10 +1,8 @@
-import update from 'immutability-helper';
+import { combineReducers } from 'redux'
+import visiableReducer from './visiable';
 
-const initialState = {};
+const rootReducer = combineReducers({
+  visiable: visiableReducer
+});
 
-export default function messageReducer(state = initialState, action) {
-  switch (action.type) {
-    default:
-      return state;
-  }
-}
+export default rootReducer;
