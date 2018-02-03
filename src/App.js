@@ -5,6 +5,7 @@ import propTypes from 'prop-types';
 import Styled from 'styled-components';
 import { fetchMessages } from './actions';
 import Navs from './components/Navs';
+import 'normalize.css';
 
 class Message extends Component {
   constructor(props) {
