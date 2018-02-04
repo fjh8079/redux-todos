@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { get as _get } from 'lodash';
+import { get as _get, filter as _filter } from 'lodash';
 import propTypes from 'prop-types';
 import Styled from 'styled-components';
 import { fetchMessages } from './actions';
 import Navs from './components/Navs';
+import List from './components/List';
+import ActionBtn from './components/ActionBtn';
 import 'normalize.css';
 
-class Message extends Component {
+class Message extends PureComponent {
   constructor(props) {
     super(props);
   }
@@ -19,17 +21,18 @@ class Message extends Component {
 
   render() {
     const Wrapper = Styled.div`
+      position: relative;
       max-width: 600px;
       margin: 2rem auto;
       height: calc(100vh - 4rem);
+      box-shadow: 1px 1px 4px rgba(0, 0, 0, .5);
     `;
 
     return (
       <Wrapper>
         <Navs />
-        <div>
-
-        </div>
+        <List />
+        <ActionBtn />
       </Wrapper>
     );
   }
@@ -39,11 +42,4 @@ Message.propTypes = {
   dispatch: propTypes.func.isRequired,
 }
 
-function mapStateToProps(state) {
-  const messages = _get(state, 'message.AllMessages', [])
-  return {
-    messages
-  };
-}
-
-export default connect(mapStateToProps)(Message);
+export default connect()(Message);
