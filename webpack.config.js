@@ -3,13 +3,17 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: ['./src/index.js'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
+  devtool: 'source-map',
   devServer: {
     contentBase: './dist',
+    compress: true,
+    historyApiFallback: true, // 所有路徑都會執行index.html
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),

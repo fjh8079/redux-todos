@@ -1,24 +1,39 @@
 import update from 'immutability-helper';
-import { filter as _filter } from 'lodash';
-import { CHANGE_SELECTED_TYPE, UPDATE_MESSAGES, ON_SELECT_LIST, CLEAR_SELECTED, DELETE_SELECTED } from '../constants';
+import { get as _get, filter as _filter } from 'lodash';
+import { normalize } from 'normalizr';
+import { messageListSchema } from '../schemas';
+import { 
+  CHANGE_SELECTED_TYPE, 
+  UPDATE_MESSAGES, 
+  ON_SELECT_LIST, 
+  CLEAR_SELECTED,
+  DELETE_SELECTED,
+} from '../constants';
 
 const initialState = {
   total: 0,
-  AllMessages: [],
+  byId: {},
+  allIds: [],
   selectedId: []
 };
 
 function messageReducer(state = initialState, action) {
   switch (action.type) {
-    case UPDATE_MESSAGES:
+    case UPDATE_MESSAGES: {
+      const messageResults = normalize(action.payload.messages, messageListSchema);
       return update(state, {
         total: {
           $set: action.payload.total
         },
-        AllMessages: {
-          $push: action.payload.messages
+        byId: {
+          $merge: _get(messageResults, 'entities.messages', {})
+        },
+        allIds: {
+          $push: messageResults.result
         }
       })
+    }
+      
 
     case ON_SELECT_LIST: {
       if (~state.selectedId.indexOf(action.payload)) {
@@ -37,11 +52,11 @@ function messageReducer(state = initialState, action) {
     }
 
     case DELETE_SELECTED: {
-      const newArray = _filter(state.AllMessages, (item) => {
-        return !~state.selectedId.indexOf(item.msg_id.toString())
+      const newArray = _filter(state.allIds, (id) => {
+        return !~state.selectedId.indexOf(id.toString())
       })
       return update(state, {
-        AllMessages: {
+        allIds: {
           $set: newArray
         },
         selectedId: {
@@ -49,7 +64,6 @@ function messageReducer(state = initialState, action) {
         }
       })
     }
-      
 
     case CLEAR_SELECTED:
       return update(state, {

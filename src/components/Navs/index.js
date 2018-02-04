@@ -24,19 +24,12 @@ class Navs extends Component {
     
     const NAV_TYPES = ['All', 'Social', 'News'];
     
-    const NavUlStyle = Styled.ul`
+    const NavUlStyle = Styled.div`
       display: flex;
-      list-style: none;
       padding: 0;
       margin: 0;
       background-color: #2C96EC;
       color: #FFF;
-    `;
-
-    const NavLiStyle = Styled.li`
-      width: calc(100% / 3);
-      padding: 1rem 0;
-      text-align: center;
     `;
 
     return (

@@ -4,7 +4,7 @@ import Styled from 'styled-components';
 import { get as _get, filter as _filter } from 'lodash';
 import ListItem from './ListItem';
 
-const List = ({ messages }) => {
+const List = ({ allIds, byId }) => {
   const ListStyle = Styled.ul`
     margin: 0;
     padding: 1rem;
@@ -18,9 +18,9 @@ const List = ({ messages }) => {
   return (
     <ListStyle>
       {
-        messages.map((message) => {
+        allIds.map((id) => {
           return (
-            <ListItem key={message.msg_id} message={message} />
+            <ListItem key={id} message={byId[id]} />
           )
         })
       }
@@ -29,17 +29,20 @@ const List = ({ messages }) => {
 }
 
 function mapStateToProps(state) {
-  const selectedType = _get(state, 'visiable', 'All');
+  const selectedType = _get(state, 'visiable');
   const selectedId = _get(state, 'message.selectedId', []);
-  let messages = _get(state, 'message.AllMessages', []);
+  let allIds = _get(state, 'message.allIds', []);
+  const byId = _get(state, 'message.byId', {});
   if (selectedType !== 'All') {
-    messages = _filter(messages, (item) => {
-      return item.msg_type === selectedType.toUpperCase();
+    allIds = _filter(allIds, (id) => {
+      const messageType = _get(byId, `${id}.msg_type`);
+      return messageType && messageType === selectedType.toUpperCase();
     })
   }
   
   return {
-    messages
+    allIds,
+    byId
   };
 }
 

@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { get as _get } from 'lodash';
-import { onSelectList } from '../../actions';
 import { Btn } from '../Styles';
 import CheckBox from './CheckBox';
 
@@ -43,6 +43,10 @@ const ListItem = ({ message }) => {
     text-overflow: ellipsis;
   `;
 
+  const TitleLink = Styled(Link)`
+    text-decortion: none;
+  `;
+
   return (
     <ListLiStyle key={message.msg_id}>
       <CheckBox message={message} />
@@ -51,9 +55,9 @@ const ListItem = ({ message }) => {
           <IconImg src={message.msg_icon} />
         </IconDiv>
         <TitleDiv>{message.msg_title}</TitleDiv>
-        <div>
+        <TitleLink to={`/detail/${message.msg_id}`}>
           <Btn>View</Btn>
-        </div>
+        </TitleLink>
       </ListCard>
     </ListLiStyle>
   );

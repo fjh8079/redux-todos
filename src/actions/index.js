@@ -1,4 +1,10 @@
-import { CHANGE_SELECTED_TYPE, FETCH_MESSAGES, ON_SELECT_LIST, CLEAR_SELECTED, DELETE_SELECTED } from '../constants';
+import { 
+  CHANGE_SELECTED_TYPE, 
+  FETCH_MESSAGES, 
+  ON_SELECT_LIST, 
+  CLEAR_SELECTED, 
+  DELETE_SELECTED
+} from '../constants';
 
 export function onChangeSelected(val) {
   return {
