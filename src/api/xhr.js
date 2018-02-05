@@ -20,8 +20,9 @@ export const get = (url, params = {}) => {
   });
 };
 
-export const fetchMessagesData = () => {
-  return get('https://jimmy319.github.io/challenge/list/');
+export const fetchMessagesData = (nextPageKey) => {
+  const nextPage = nextPageKey ? `${nextPageKey}/` : '';
+  return get(`https://jimmy319.github.io/challenge/lazy/${nextPage}`);
 }
 
 

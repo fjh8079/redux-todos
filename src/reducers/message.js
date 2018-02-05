@@ -12,6 +12,7 @@ import {
 
 const initialState = {
   total: 0,
+  nextPageKey: '',
   byId: {},
   allIds: [],
   selectedId: []
@@ -21,9 +22,13 @@ function messageReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_MESSAGES: {
       const messageResults = normalize(action.payload.messages, messageListSchema);
+      console.log('messageResults', messageResults)
       return update(state, {
         total: {
           $set: action.payload.total
+        },
+        nextPageKey: {
+          $set: action.payload.nextPageKey
         },
         byId: {
           $merge: _get(messageResults, 'entities.messages', {})

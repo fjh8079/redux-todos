@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { get as _get } from 'lodash';
 import propTypes from 'prop-types';
@@ -9,9 +9,31 @@ import List from '../components/List';
 import ActionBtn from '../components/ActionBtn';
 import 'normalize.css';
 
-class Pages extends PureComponent {
+class Pages extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  handleScroll() {
+    const height = document.getElementById('list').clientHeight;
+    const listHeight = document.getElementsByClassName('list-wrappr')[0].clientHeight;
+    const scrollTop = document.getElementById('list').scrollTop;
+    if ((scrollTop + height) >= (listHeight + 86) ) {
+      this.loadMore();
+    }
+  }
+
+  loadMore() {
+    const { dispatch, nextPageKey } = this.props;
+    if (nextPageKey) {
+      dispatch(fetchMessages(nextPageKey));
+    }
+  }
 
   componentDidMount() {
+
     const { dispatch, allIds, match } = this.props;
 
     switch(match.path) {
@@ -31,6 +53,13 @@ class Pages extends PureComponent {
     if (allIds.length === 0) {
       dispatch(fetchMessages());
     }
+
+    window.addEventListener('scroll', this.handleScroll, true);
+    
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll, true);
   }
 
   render() {
@@ -45,7 +74,7 @@ class Pages extends PureComponent {
     return (
       <Wrapper>
         <Navs />
-        <List />
+        <List/>
         <ActionBtn />
       </Wrapper>
     );
@@ -58,8 +87,10 @@ Pages.propTypes = {
 
 function mapStateToProps(state) {
   const allIds = _get(state, 'message.allIds', []);
+  const nextPageKey = _get(state, 'message.nextPageKey');
   return {
-    allIds
+    allIds,
+    nextPageKey
   }
 }
 

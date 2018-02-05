@@ -13,9 +13,10 @@ export function onChangeSelected(val) {
   };
 }
 
-export function fetchMessages(val) {
+export function fetchMessages(nextPageKey) {
   return {
-    type: FETCH_MESSAGES
+    type: FETCH_MESSAGES,
+    payload: nextPageKey
   };
 }
 

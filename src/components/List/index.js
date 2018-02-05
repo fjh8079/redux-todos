@@ -7,7 +7,7 @@ import ListItem from './ListItem';
 const List = ({ allIds, byId }) => {
   const ListStyle = Styled.ul`
     margin: 0;
-    padding: 1rem;
+    padding: 20px;
     padding-bottom: 50px;
     list-style: none;
     height: calc(100% - 54px);
@@ -16,7 +16,8 @@ const List = ({ allIds, byId }) => {
   `;
 
   return (
-    <ListStyle>
+    <ListStyle id="list">
+      <div className="list-wrappr">
       {
         allIds.map((id) => {
           return (
@@ -24,6 +25,7 @@ const List = ({ allIds, byId }) => {
           )
         })
       }
+      </div>
     </ListStyle>
   );
 }
