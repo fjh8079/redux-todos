@@ -1,19 +1,19 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom'
-import configureStore from './store/configureStore';
-import AppRoute from './routes';
+var express = require('express');
+var bodyParser = require('body-parser');
+var path = require('path');
+var port = process.env.PORT || 8080
 
-let reduxState = {};
+var app = express();
 
-const store = configureStore(reduxState);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <AppRoute />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('main-app')
-);
+app.use('/dist', express.static('dist'));
+
+app.get('*', function(req, res) {
+  res.sendFile(path.resolve(__dirname, './index.html'));
+});
+
+app.listen(port, function() {
+  console.log(`Example app listening on port ${port}!`);
+});

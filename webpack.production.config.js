@@ -6,21 +6,14 @@ module.exports = {
   entry: ['./src/app.js'],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '',
-  },
-  devtool: 'source-map',
-  devServer: {
-    contentBase: './dist',
-    compress: true,
-    historyApiFallback: true, // 所有路徑都會執行index.html
+    path: path.join(__dirname, 'dist'),
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      inject: 'body',
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: './src/index.html',
+    //   inject: 'body',
+    // }),
   ],
   module: {
     rules: [
