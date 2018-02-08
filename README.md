@@ -6,6 +6,10 @@
 yarn install
 
 # start dev server
+yarn dev
+
+# start prod server
+yarn build
 yarn start
 ```
 
